@@ -1,0 +1,32 @@
+<Configuration monitorInterval="60">
+	<Appenders>
+		<Async name="Asynchstdout" includeLocation="true">
+			<AppenderRef ref="stdout"/>
+		</Async>
+		<Async name="AsynchR" includeLocation="true">
+			<AppenderRef ref="R"/>
+		</Async>
+
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{ISO8601} | %X{TradeId} | %X{MessageId} | %-5.5p | %t | %c{1} | %L | %m%n"/>
+		</Console>
+
+		<RollingRandomAccessFile name="R" fileName="luxor-client-test.log"
+								 filePattern="luxor-client-test.log.%d{yyyy-MM-dd}">
+			<Policies>
+				<OnStartupTriggeringPolicy/>
+				<TimeBasedTriggeringPolicy/>
+				<SizeBasedTriggeringPolicy size="1024 MB"/>
+			</Policies>
+			<PatternLayout pattern="%d{ISO8601} | %-5.5p | %t | %c{1} | %L | %m%n"/>
+		</RollingRandomAccessFile>
+	</Appenders>
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="Asynchstdout"/>
+			<AppenderRef ref="AsynchR"/>
+		</Root>
+		<Logger name="org.springframework" level="debug" includeLocation="true"/>
+		<Logger name="com.anz" level="debug" includeLocation="true"/>
+	</Loggers>
+</Configuration>
